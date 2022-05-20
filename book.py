@@ -51,7 +51,9 @@ def addbooking():
                         'message': f'ERROR: Cannot find "{hotel_name}"'})
     # Check if there is a booking made by the user at the same date for the hotel
     elif Booking.objects(package=selected_hotel.id, customer=current_user.id, check_in_date=checkindate).first() is None:
-        Booking(check_in_date=checkindate,customer=current_user.id,package=selected_hotel.id).save()
+        new_book = Booking(check_in_date=checkindate,customer=current_user.id,package=selected_hotel.id)
+        new_book.calculate_total_cost()
+        new_book.save()
         return jsonify({'status' : 'OK',
                         'message': f'Booking at "{hotel_name}" on {checkindate.strftime("%d-%m-%Y")} for {current_user.name} was made.'})
     # Return an error msg that there is already an existing booking made by user at the same date

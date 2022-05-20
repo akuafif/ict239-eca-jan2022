@@ -1,9 +1,13 @@
 <!-- templates/_render_field.html -->
 {% macro render_field(field) %}
 <div class="form-group">
+    <!-- to create a label for the input field -->
     <label for="{{ field.name }} ">{{ field.label.text }}</label>
+
+    <!-- to create an input form control for the input field -->
     {{ field(class_='form-control', **kwargs)|safe }}
     <ul> 
+        <!-- to view the errors for the input field -->
         {% for error in field.errors %}
         <li style="color:red;">{{ error }}</li>
         {% endfor %}

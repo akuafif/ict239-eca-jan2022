@@ -1,4 +1,4 @@
-<!-- templates/dashboard.html -->
+<!-- templates/trend_chart.html -->
 {% set currentpage = 'DASHBOARD' %}
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
@@ -50,5 +50,5 @@
     <!-- End of Chart card -->
 </div>  
 <!-- end of side bar offset -->
-<script src="{{ url_for('static', filename='js/dashboard.js')}}"></script>
+<script src="{{ url_for('static', filename='js/trend_chart.js')}}"></script>
 {% endblock %}
