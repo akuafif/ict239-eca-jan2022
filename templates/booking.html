@@ -1,0 +1,67 @@
+<!-- templates/booking.html -->
+
+<!-- Set the top nav title in the base html -->
+{% set currentpage = hotel_name %}
+{% extends "base.html" %}
+
+<!-- Set the title of the current page -->
+{% block title %}{{ hotel_name }}{% endblock %}
+{% block head %}
+<!-- Start of moment.js(datetime) and dstel(datepicker) import -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dtsel.css')}}">
+<script src="{{ url_for('static', filename='js/dtsel.js')}}"></script>
+<script src="{{ url_for('static', filename='js/moment.js')}}"></script>
+<!-- End of import -->
+{% endblock %}
+{% block mainblock %}
+<!-- Need this for offset the sidebar-->
+<div class="row row-cols-1 row-cols-md-3 g-4 ml-auto">
+    <!-- Start of package view field -->
+    <div class="col-sm-6 col-lg-4 mb-3">
+        <div class="card mb-3">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ hotel_name }}" focusable="false">
+                <title>{{ hotel_name }}</title>
+                <image class="bd-placeholder-img card-img-top" xlink:href="{{ image_url }}" style="border: none; width: 100%;height: 100%;" alt="{{ hotel_name }}"></image>
+            </svg>
+        <div class="card-body">
+            <!-- To view the staycation hotel name -->
+            <h5 id="hotel_name" class="card-title">{{ hotel_name }}</h5>
+            <!-- To show the staycation description -->
+            <p class="card-text">{{ description }}</p>
+        </div>
+        </div>
+    </div>
+    <!-- End of package view field -->
+    
+	<!-- Start of booking card field -->
+	{% if description != 'Invalid Staycation Package' %} 
+    <div class="col-sm-6 col-lg-4 mb-3">
+        <div class="card mb-3">
+            <div class="card-header">
+               <h2>Select This Offer</h2>
+            </div>
+            <div class="card-body">
+                <!-- Start of booking form -->
+				<form action="/addbooking" method="post" onsubmit='return false'>
+                    <!-- Start of date picker -->
+                  	<input name="checkindate" id="checkindate" value="dd-mm-yyyy"/></br></br>
+                    <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+                    <!-- end of date picker -->
+                </form>
+                <!-- End of booking form -->
+
+				<!-- Show the booking result -->
+				</br></br>
+				<p id="error" style="color:red;"></p> 
+                <p id="output" style="color:green;"></p>    
+            </div>
+        </div>
+    </div>
+	{% endif %}
+    <!-- End of booking card field -->
+</div>
+<!-- end of side bar offset -->
+
+<!-- To include booking.js to handle the user booking -->
+<script src="{{ url_for('static', filename='js/booking.js')}}"></script>
+{% endblock %}

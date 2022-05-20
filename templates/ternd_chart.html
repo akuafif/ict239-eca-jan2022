@@ -1,0 +1,54 @@
+<!-- templates/dashboard.html -->
+{% set currentpage = 'DASHBOARD' %}
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block head %} 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dtsel.css')}}">
+<script src="{{ url_for('static', filename='js/dtsel.js')}}"></script>
+<script src="{{ url_for('static', filename='js/moment.js')}}"></script>
+{% endblock %}
+{% block mainblock %}
+<!-- Need this for offset the sidebar-->
+<div class="row row-cols-1 row-cols-md-3 g-4 ml-auto">
+    <!-- Start of Select Date Range card -->
+    <div class="col-xl-14 col-sm-12 p-4">
+			<div class="card card-common">
+				<div class="card-header">
+					<h2>Select Date Range</h2>
+				</div>
+				<div class="card-body">
+					<form action="/get_chart_data" method="post" onsubmit='return false'>
+						<!-- Start of date picker -->
+						Range: <input name="fromdate" id="fromdate" value="{{ startdate }}"/>
+						- <input name="todate" id="todate" value="{{ enddate }}"/>
+						<button type="submit" class="btn btn-primary", value="submit">Submit</button>
+						<label class="col-md-4">
+							<input type="checkbox" name="checkbox" id="checkbox"> Include $0 Income Labels
+						</label>
+						<!-- end of date picker -->
+
+						<p id="error" style="color:red;"></p> 
+						<p id="output" style="color:black;"></p>   
+					</form>
+				</div>  
+			</div>
+    </div>
+    <!-- End of Select Date Range card-->
+    <!-- Start of Chart card -->
+    <div class="col-xl-14 col-sm-12 p-4">
+			<div class="card card-common">
+				<div class="card-header">
+					<h2>Package Incoming</h2>
+				</div>
+			<div class="card-body chart-container">
+				<div style="height: 500px">
+					<canvas id="myChart"></canvas>
+				</div>
+			</div>
+    </div>
+    <!-- End of Chart card -->
+</div>  
+<!-- end of side bar offset -->
+<script src="{{ url_for('static', filename='js/dashboard.js')}}"></script>
+{% endblock %}

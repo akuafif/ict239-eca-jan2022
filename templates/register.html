@@ -1,0 +1,30 @@
+<!-- templates/register.html -->
+{% from "_render_field.html" import render_field %}
+{% set currentpage = 'REGISTER' %}
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block mainblock %}
+<div class="row pt-md-5 ml-md-3 mt-md-3 mb-5">
+  <div class="col-xl-6 col-sm-6 p-2">
+    <div class="card card-common">
+      <div class="card-header">
+        <h2>Register</h2>
+      </div>
+      <div class="card-body">
+          <form action="/register" method="post">
+              {{ render_field(form.email, type="email", placeholder="Enter email", id="email") }}
+              {{ render_field(form.password, type="password", placeholder="Enter password", id="pwd") }}
+              {{ render_field(form.name, type="name", id="name") }}
+              {{ form.hidden_tag() }}
+              <div>
+                <label class="col-md-4">
+                  <input type="checkbox" name="checkbox" id="checkbox"> Remember Me
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary", value="login">Submit</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,121 @@
+<!-- templates/base.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>{% block title %}{% endblock %} | Staycation Portal</title>
+    {% block head %}{% endblock %} 
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-md navbar-light">
+      <button class="navbar-toggler ml-auto mb-2 bg-light" type="button" data-toggle="collapse" data-target="#myNavbar">
+        <!-- Hamburger icon for mobile devices -->
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- Start of Sidebar -->
+            <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
+              <a href="/" class="navbar-brand text-white d-block mx-auto text-center py-3 mb-4 bottom-border">Staycation Portal</a>
+
+              <!-- User name div -->
+              {% if current_user.is_authenticated %}
+              <div class="bottom-border pb-3">
+                <img src=" {{ url_for('static', filename='img/admin.jpeg')}} " width="50" class="rounded-circle mr-3">
+                <a href="/" class="text-white">{{ current_user.name }}</a>
+              </div>
+              {% endif %}
+              <!-- End of User name div -->
+              
+              <ul class="navbar-nav flex-column mt-4">
+                <!-- If Not authenticated -->
+                {% if current_user.is_anonymous %}
+                <li class="nav-item"><a href="{{ url_for('auth.login') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-home text-light fa-lg mr-3"></i>Login</a></li>
+                <li class="nav-item"><a href="{{ url_for('auth.register') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-user text-light fa-lg mr-3"></i>Register</a></li>
+                {% endif %}
+                <!-- End if -->
+
+                <!-- If Normal Account -->
+                {% if current_user.is_authenticated %}
+                <li class="nav-item"><a href="{{ url_for('package.packages') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-address-card text-light fa-lg mr-3"></i>Package</a></li>
+                {% endif %}
+                <!-- End if -->
+
+                <!-- If Admin -->
+                {% if current_user.email == 'admin@abc.com' %}
+                <li class="nav-item"><a href="{{ url_for('base') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Dashboard</a></li>
+                <li class="nav-item"><a href="{{ url_for('upload') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-upload text-light fa-lg mr-3"></i>Upload</a></li>
+                {% endif %}
+                <!-- End if -->
+              </ul>
+            </div>
+            <!-- End of Sidebar -->
+
+            <!-- Start of top-nav -->
+            <div class="col-xl-10 col-lg-9 col-md-8 ml-auto top-navbar fixed-top py-2" id="top-navbar">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <h4 class="text-light text-uppercase mb-0">{{currentpage}}</h4>
+                </div>
+                <div class="col-md-6">
+                  <ul class="navbar-nav">
+                    <!-- Log Out -->
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item ml-md-auto"><a href="#" class="nav-link" data-toggle="modal" data-target="#sign-out"><i class="fas fa-sign-out-alt fa-lg"></i></a></li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- End of top-nav -->
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- end of navbar -->
+
+    <!-- modal -->
+    <div class="modal fade" id="sign-out">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Want to leave?</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            Press logout to leave
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Stay Here</button>
+            <a href="/logout" class="btn btn-danger" role="button">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of modal -->
+
+    <!-- Container -->
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+              {% block mainblock %}
+              {% endblock %}
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End of Container -->
+
+    <!-- Ajax and Bootstrap js import -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  </body>
+</html>

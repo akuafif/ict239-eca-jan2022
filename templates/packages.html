@@ -1,0 +1,27 @@
+<!-- templates/viewallpackages.html -->
+{% set currentpage = 'PACKAGE' %}
+{% extends "base.html" %}
+{% block title %}Packages{% endblock %}
+{% block mainblock %}
+<!-- Need this for offset the sidebar -->
+<div class="row row-cols-1 row-cols-md-3 g-4 ml-auto">
+  {% for pkg in hotel_list %}
+  <div class="col-sm-6 col-lg-4 mb-3">
+    <div class="card mb-3 h-100">
+      <svg class="bd-placeholder-img card-img-top" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ pkg.hotel_name }}" focusable="false">
+        <title>{{ pkg.hotel_name }}</title>
+        <image class="bd-placeholder-img card-img-top" xlink:href="{{ pkg.image_url }}" style="border: none; width: 100%;height: 100%;" alt="{{ pkg.hotel_name }}"></image>
+      </svg>
+      <div class="card-body">
+        <h5 class="card-title">{{ pkg.hotel_name }}</h5>
+        <p class="card-text">{{ pkg.description }}</p>
+        <div class="bottom-right bottom-right-flex">
+          <button type="button" class="btn btn-primary" onClick="location.href='view?hotel={{ pkg.hotel_name }}'">Book</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<!-- end of side bar offset -->
+{% endblock %}

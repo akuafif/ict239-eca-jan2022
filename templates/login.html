@@ -1,0 +1,38 @@
+<!-- templates/login.html -->
+{% from "_render_field.html" import render_field %}
+{% set currentpage = 'LOGIN' %}
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block mainblock %}
+<div class="row pt-md-5 ml-md-3 mt-md-3 mb-5">
+  <div class="col-xl-6 col-sm-6 p-2">
+    <div class="card card-common">
+      <div class="card-header">
+        <h2>Login</h2>
+      </div>
+      <div class="card-body">
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li style="color:red;">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+          {% endwith %}
+          <form action="/login" method="post">
+              {{ render_field(form.email, type="email", placeholder="Enter email", value=email, id="email") }}
+              {{ render_field(form.password, type="password", placeholder="Enter password", value=pwd, id="pwd") }} 
+              {{ form.hidden_tag() }}
+              <div>
+                <label class="col-md-4">
+                  <input type="checkbox" name="checkbox" id="checkbox" {{ rem }}> Remember Me
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary", value="login">Submit</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

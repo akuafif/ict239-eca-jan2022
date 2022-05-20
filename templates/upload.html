@@ -1,0 +1,50 @@
+<!-- templates/upload.html -->
+
+<!-- Set the top nav title in the base html -->
+{% set currentpage = 'UPLOAD' %}
+{% extends "base.html" %}
+
+<!-- Set the title of the current page -->
+{% block title %}Upload{% endblock %}
+{% block mainblock %}
+
+<!-- Need this for offset the sidebar -->
+<div class="row pt-md-5 ml-md-3 mt-md-3 mb-5">
+   <div class="col-xl-6 col-sm-6 p-2">
+      <div class="card card-common">
+         <div class="card-header">
+            <h2>Upload recordings</h2>
+         </div>
+         <div class="card-body">
+            <form id="uploadForm" action="/dummy" method="post" enctype="multipart/form-data"  onsubmit="return false">
+				<!-- Start of upload file field -->
+				<p>Upload CSV file</p>
+				With data type of: 
+				<!-- Drop Down List to select the type of upload -->
+				<select id="datatype" name="datatype">
+					<option value="user">Users</option>
+					<option value="staycation">Staycation</option>
+					<option value="booking">Booking</option>
+				</select>
+				<br>
+				<!-- To show a file upload field -->
+				<input id="file" name="file" type="file">
+				<br>
+				<!-- End of upload file field -->
+				<br>
+				<button type="submit">Upload</button>
+				<br><br>  
+				<!-- Start of upload result field  -->
+				<p id="error" style="color:red;"></p> 
+				<p id="output" style="color:green;"></p>  
+				<!--  End of upload result field -->
+           </form>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- end of side bar offset -->
+
+<!-- To include upload.js to handle the upload -->
+<script src="{{ url_for('static', filename='js/upload.js')}}"></script>
+{% endblock %}
