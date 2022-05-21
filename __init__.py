@@ -27,7 +27,7 @@ def create_app():
     login_manager.init_app(app)
 
     # The login_view will points to the route '/login' if the user is anonymous.
-    login_manager.login_view = 'login'
+    login_manager.login_view = 'auth.login'
 
     # Return the variable required for other classes to import.
     # app: The flask variable, for blueprints and routes

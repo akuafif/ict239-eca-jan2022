@@ -6,8 +6,10 @@ from app import app, db, login_manager
 from users import User
 from auth import auth
 from staycation import STAYCATION, package
+from dashboard import dashboard
 app.register_blueprint(auth)
 app.register_blueprint(package)
+app.register_blueprint(dashboard)
 
 # Load the current user if user previously logged in
 @login_manager.user_loader
@@ -54,7 +56,7 @@ def upload():
     # 4. for loop the pd object and save each row to db
     if current_user.email == 'admin@abc.com':
         return render_template('upload.html')
-    return redirect(url_for('auth.login')) 
+    return redirect(url_for('login')) 
 
 @app.route('/up_user', methods=['POST'])
 @login_required

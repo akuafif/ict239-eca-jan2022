@@ -25,37 +25,69 @@
             <!-- Start of Sidebar -->
             <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
               <a href="/" class="navbar-brand text-white d-block mx-auto text-center py-3 mb-4 bottom-border">Staycation Portal</a>
-
-              <!-- User name div -->
-              {% if current_user.is_authenticated %}
-              <div class="bottom-border pb-3">
-                <img src=" {{ url_for('static', filename='img/admin.jpeg')}} " width="50" class="rounded-circle mr-3">
-                <a href="/" class="text-white">{{ current_user.name }}</a>
-              </div>
-              {% endif %}
-              <!-- End of User name div -->
-              
-              <ul class="navbar-nav flex-column mt-4">
-                <!-- If Not authenticated -->
-                {% if current_user.is_anonymous %}
-                <li class="nav-item"><a href="{{ url_for('auth.login') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-home text-light fa-lg mr-3"></i>Login</a></li>
-                <li class="nav-item"><a href="{{ url_for('auth.register') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-user text-light fa-lg mr-3"></i>Register</a></li>
-                {% endif %}
-                <!-- End if -->
-
-                <!-- If Normal Account -->
+              <span id = "mainmenu">
+                <!-- User name div -->
                 {% if current_user.is_authenticated %}
-                <li class="nav-item"><a href="{{ url_for('package.packages') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-address-card text-light fa-lg mr-3"></i>Package</a></li>
+                <div class="bottom-border pb-3">
+                  <img src=" {{ url_for('static', filename='img/admin.jpeg')}} " width="50" class="rounded-circle mr-3">
+                  <a href="/" class="text-white">{{ current_user.name }}</a>
+                </div>
                 {% endif %}
-                <!-- End if -->
+                <!-- End of User name div -->
+                
+                <ul class="navbar-nav flex-column mt-4">
+                  <!-- If Not authenticated -->
+                  {% if current_user.is_anonymous %}
+                  <li class="nav-item"><a href="{{ url_for('auth.login') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-home text-light fa-lg mr-3"></i>Login</a></li>
+                  <li class="nav-item"><a href="{{ url_for('auth.register') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-user text-light fa-lg mr-3"></i>Register</a></li>
+                  {% endif %}
+                  <!-- End if -->
 
-                <!-- If Admin -->
-                {% if current_user.email == 'admin@abc.com' %}
-                <li class="nav-item"><a href="{{ url_for('base') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Dashboard</a></li>
-                <li class="nav-item"><a href="{{ url_for('upload') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-upload text-light fa-lg mr-3"></i>Upload</a></li>
-                {% endif %}
-                <!-- End if -->
-              </ul>
+                  <!-- If Normal Account -->
+                  {% if current_user.is_authenticated %}
+                  <li class="nav-item"><a href="{{ url_for('package.packages') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-address-card text-light fa-lg mr-3"></i>Package</a></li>
+                  {% endif %}
+                  <!-- End if -->
+
+                  <!-- If Admin -->
+                  {% if current_user.email == 'admin@abc.com' %}
+                  <li class="nav-item"><a  href="#" onclick="showStuff('submenu', 'mainmenu'); return false;" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Dashboard</a></li>
+                  <li class="nav-item"><a href="{{ url_for('upload') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-upload text-light fa-lg mr-3"></i>Upload</a></li>
+                  {% endif %}
+                  <!-- End if -->
+                </ul>
+              </span>
+              <span id="submenu" style="display: none;">
+                <ul class="navbar-nav flex-column mt-4">
+                  <!-- If Admin -->
+                  {% if current_user.email == 'admin@abc.com' %}
+                  <li class="nav-item"><a href="/trend_chart" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Total Income</a></li>
+                  <li class="nav-item">
+                    <a href="/trend_chart_per_user" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Due Per User</a>
+                      <span id="dropdownuser"  style="display: none;">
+                        <label for="userchartselect">> </label>
+                        <select id="userchartselect" name="userchartselect">
+                          {% for user in dropdownlist %}
+                          <option value="{{ user.email }}">{{ user.name }}</option>
+                          {% endfor %}
+                        </select>
+                      </span>
+                  </li>
+                  <li class="nav-item"><a href="/trend_chart_per_hotel" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Due Per Hotel</a>
+                    <span id="dropdownhotel"  style="display: none;">
+                      <label for="hotelchartselect">> </label>
+                      <select id="hotelchartselect" name="hotelchartselect">
+                        {% for hotel_name in dropdownlist %}
+                        <option value="{{ hotel_name }}">{{ hotel_name }}</option>
+                        {% endfor %}
+                      </select>
+                    </span>                  
+                  </li>
+                  <li class="nav-item"><a href="#" onclick="showStuff('mainmenu', 'submenu'); return false;" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-upload text-light fa-lg mr-3"></i>Back to Packages</a></li>
+                  {% endif %}
+                  <!-- End if -->
+                </ul>
+              </span>
             </div>
             <!-- End of Sidebar -->
 
@@ -116,6 +148,12 @@
     <!-- End of Container -->
 
     <!-- Ajax and Bootstrap js import -->
+    <script>
+      function showStuff(tagToShow, tagToHide) {
+          document.getElementById(tagToShow).style.display = 'block';
+          document.getElementById(tagToHide).style.display = 'none';
+      }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
   </body>
