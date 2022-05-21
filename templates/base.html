@@ -62,6 +62,7 @@
                   <!-- If Admin -->
                   {% if current_user.email == 'admin@abc.com' %}
                   <li class="nav-item"><a href="/trend_chart" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Total Income</a></li>
+                  <!-- Start of the Due Per User content -->
                   <li class="nav-item">
                     <a href="/trend_chart_per_user" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Due Per User</a>
                       <span id="dropdownuser"  style="display: none;">
@@ -73,6 +74,8 @@
                         </select>
                       </span>
                   </li>
+                  <!-- End of the Due Per User content -->
+                  <!-- Start of the Due Per Hotel content -->
                   <li class="nav-item"><a href="/trend_chart_per_hotel" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Due Per Hotel</a>
                     <span id="dropdownhotel"  style="display: none;">
                       <label for="hotelchartselect">> </label>
@@ -83,6 +86,7 @@
                       </select>
                     </span>                  
                   </li>
+                  <!-- End of the Due Per User content -->
                   <li class="nav-item"><a href="#" onclick="showStuff('mainmenu', 'submenu'); return false;" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-upload text-light fa-lg mr-3"></i>Back to Packages</a></li>
                   {% endif %}
                   <!-- End if -->
