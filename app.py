@@ -1,4 +1,3 @@
-
 import os
 from flask import render_template, send_from_directory
 from app import app, db, login_manager
