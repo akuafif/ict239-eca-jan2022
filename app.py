@@ -6,25 +6,19 @@ from app import app, db, login_manager
 from users import User
 from auth import auth
 from staycation import STAYCATION, package
+from dashboard import dashboard
 app.register_blueprint(auth)
 app.register_blueprint(package)
+app.register_blueprint(dashboard)
 
 # Load the current user if user previously logged in
 @login_manager.user_loader
 def load_user(user_id):
     return User.objects(pk=user_id).first()
 
-@app.route("/favicon.ico")
-def favicon():
-	return send_from_directory(os.path.join(app.root_path, 'assets'),'favicon.ico',mimetype='image/vnd.microsof.icon')
-
 @app.route('/base')
 def base():
     return render_template('base.html')
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
 
 from flask import Blueprint, request, redirect, render_template, url_for, flash, render_template, jsonify
 from flask_login import login_required, current_user

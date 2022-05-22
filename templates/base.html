@@ -51,7 +51,7 @@
 
                 <!-- If Admin -->
                 {% if current_user.email == 'admin@abc.com' %}
-                <li class="nav-item"><a href="{{ url_for('base') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Dashboard</a></li>
+                <li class="nav-item"><a href="{{ url_for('dashboard.chart') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-chart-area text-light fa-lg mr-3"></i>Dashboard</a></li>
                 <li class="nav-item"><a href="{{ url_for('upload') }}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-upload text-light fa-lg mr-3"></i>Upload</a></li>
                 {% endif %}
                 <!-- End if -->
